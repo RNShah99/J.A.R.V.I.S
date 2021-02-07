@@ -13,10 +13,7 @@ from news import speak_news, getNewsUrl
 from diction import translate
 from loc import weather
 from youtube import youtube
-import psutil
-import pyjokes
 from sys import platform
-import os
 import getpass
 
 engine = pyttsx3.init()
@@ -65,7 +62,7 @@ def takeCommand():
         query = r.recognize_google(audio, language='en-in')
         print(f'User said: {query}\n')
 
-    except Exception as e:
+    except Exception:
         # print(e)
 
         print('Say that again please...')
@@ -94,25 +91,6 @@ def sendEmail(to, content):
     server.login('email', 'password')
     server.sendmail('email', to, content)
     server.close()
-
-
-def cpu():
-    usage = str(psutil.cpu_percent())
-    speak("CPU is at"+usage)
-
-    battery = psutil.sensors_battery()
-    speak("battery is at")
-    speak(battery.percent)
-
-
-def joke():
-    for i in range(5):
-        speak(pyjokes.get_jokes()[i])
-
-
-def screenshot():
-    img = pyautogui.screenshot()
-    img.save('path of folder you want to save/screenshot.png')
 
 
 if __name__ == '__main__':
@@ -284,5 +262,5 @@ if __name__ == '__main__':
                 sendEmail(to, content)
                 speak('Email has been sent!')
 
-            except Exception as e:
+            except Exception:
                 speak('Sorry sir, Not able to send email at the moment')
